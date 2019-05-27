@@ -31,7 +31,7 @@ Official images are images that are officially maintained and supported by the f
 
 User images are images created and shared by users like you and me. They build on base images and add additional functionality. Typically, these are formatted as user/image-name.
 
-# docker build my first docekr image and push it 
+# Docker build my first docker image and push it 
 in this folder you can easly find flask python application 
 
 than let's build it :)
@@ -107,6 +107,12 @@ docker run -it -d -p --name test 5000:5000 elhay/myfirstimgaeimsocoool:test1
 
 docker logs test 
 
+```
+
+now let's push it :) 
+
+```
+docker push elhay/myfirstimgaeimsocoool:test1
 ```
 
 
