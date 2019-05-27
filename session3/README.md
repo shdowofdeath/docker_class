@@ -115,6 +115,12 @@ now let's push it :)
 docker push elhay/myfirstimgaeimsocoool:test1
 ```
 
-
-
+validate networks 
+```
+docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+c2c695315b3a        bridge              bridge              local
+a875bec5d6fd        host                host                local
+ead0e804a67b        none                null                local
+```
 
