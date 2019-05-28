@@ -128,30 +128,17 @@ ead0e804a67b        none                null                local
 
 By default, the stages are not named, and you refer to them by their integer number, starting with 0 for the first FROM instruction. However, you can name your stages, by adding an as <NAME> to the FROM instruction. This example improves the previous one by naming the stages and using the name in the COPY instruction. This means that even if the instructions in your Dockerfile are re-ordered later, the COPY won’t break. 
 ```
-FROM golang:1.7.3
-WORKDIR /go/src/github.com/alexellis/href-counter/
-RUN go get -d -v golang.org/x/net/html  
-COPY app.go .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+FROM elhay/builder as build
+WORKDIR /tmp
+COPY . /tmp
 
-FROM alpine:latest  
-RUN apk --no-cache add ca-certificates
-WORKDIR /root/
-COPY --from=0 /go/src/github.com/alexellis/href-counter/app .
-CMD ["./app"]  
-``` 
-example with builder :) 
+RUN jekyll build
+
+FROM elhay/go-clean
+
+COPY --from=build /tmp/_site /srv/http
+```` 
 
 ```
-FROM golang:1.7.3 as builder
-WORKDIR /go/src/github.com/alexellis/href-counter/
-RUN go get -d -v golang.org/x/net/html  
-COPY app.go  .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
-
-FROM alpine:latest  
-RUN apk --no-cache add ca-certificates
-WORKDIR /root/
-COPY --from=builder /go/src/github.com/alexellis/href-counter/app .
-CMD ["./app"]  
+docker build -f BuildBase -t elhay/ceango . --build-arg proxy if needed 
 ```
