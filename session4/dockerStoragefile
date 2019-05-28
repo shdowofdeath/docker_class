@@ -1,0 +1,5 @@
+FROM debian:wheezy
+RUN useradd foo
+VOLUME this_is_the_folder_that_we_mount
+RUN touch this_is_the_folder_that_we_mount/x
+RUN chown -R foo:foo this_is_the_folder_that_we_mount
