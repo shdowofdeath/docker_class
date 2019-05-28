@@ -8,8 +8,7 @@ echo '{"devops": [{"name": "lola"}, {"name": "pola"}, {"name": "gola"}, {"name":
 docker run -d -p 7443:80 -v /tmp/devops.json:/data/db.json elhay/api-server
 
 # Listing my favourite cities
-curl http://localhost/devops
-[
+curl http://localhost:7443/devops [
   {"name": "lola"},
   {"name": "pola"},
   {"name": "gola"},
@@ -17,7 +16,7 @@ curl http://localhost/devops
 ]
 
 # Listing my favourite cities containing *lo*
-curl 'http://localhost/devops?name_like=lo'
+curl http://localhost:7443/devops?name_like=lo
 [
   {"name": "lola"}
 ]
