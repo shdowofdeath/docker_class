@@ -1,0 +1,9 @@
+FROM elhay/builder as build
+WORKDIR /tmp
+COPY . /tmp
+
+RUN jekyll build
+
+FROM elhay/go-clean
+
+COPY --from=build /tmp/_site /srv/http
