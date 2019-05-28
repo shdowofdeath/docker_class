@@ -108,3 +108,28 @@ root@79c88e396d74:/# cd mountindocker/
 root@79c88e396d74:/mountindocker# ls
 thisisonefile  thisisonefile2
 ```
+# now from docker file 
+Data Containers
+Prior to the introduction of the docker volume commands, it was common to use “data containers” for storing persistent and shared data such as databases or configuration data. This approach meant that the container essentially became a “namespace” for the data – a handle for managing it and sharing with other containers. However, in modern versions of Docker, this approach should be never be used – simply create named volumes using docker volume create –name instead.
+
+Permissions and Ownership
+Often you will need to set the permissions and ownership on a volume, or initialise the volume with some default data or configuration files. A key point to be aware of here is that anything after the VOLUME instruction in a Dockerfile will not be able to make changes to that volume e.g:
+```
+FROM debian:wheezy
+RUN useradd foo
+VOLUME /data
+RUN touch /data/x
+RUN chown -R foo:foo /data
+``` 
+Will not work as expected. We want the touch command to run in the image’s filesystem but it is actually running in the volume of a temporary container. The following will work:
+```
+FROM debian:wheezy
+RUN useradd foo
+RUN mkdir /data &amp;&amp; touch /data/x
+RUN chown -R foo:foo /data
+VOLUME /data
+```
+
+Docker is clever enough to copy any files that exist in the image under the volume mount into the volume and set the ownership correctly. This won’t happen if you specify a host directory for the volume (so that host files aren’t accidentally overwritten).
+
+If you can’t set permissions and ownership in a RUN command, you will have to do so using a CMD or ENTRYPOINT script that runs when the container is started.
