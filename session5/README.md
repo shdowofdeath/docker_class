@@ -4,21 +4,21 @@ building service api in 1 minute :)
 
 ```
 
-echo '{"cities": [{"name": "Barcelona"}, {"name": "Copenhagen"}, {"name": "Edinburgh"}, {"name": "Hanoi"}]}' > /tmp/cities.json
-docker run -d -p 80:80 -v /tmp/cities.json:/data/db.json clue/json-server
+echo '{"devops": [{"name": "lola"}, {"name": "pola"}, {"name": "gola"}, {"name": "jenkins"}]}' > /tmp/devops.json
+docker run -d -p 7443:80 -v /tmp/devops.json:/data/db.json elhay/api-server
 
 # Listing my favourite cities
-curl http://localhost/cities
+curl http://localhost/devops
 [
-  {"name": "Barcelona"},
-  {"name": "Copenhagen"},
-  {"name": "Edinburgh"},
-  {"name": "Hanoi"}
+  {"name": "lola"},
+  {"name": "pola"},
+  {"name": "gola"},
+  {"name": "jenkins"}
 ]
 
-# Listing my favourite cities containing *bar*
-curl 'http://localhost/cities?name_like=bar'
+# Listing my favourite cities containing *lo*
+curl 'http://localhost/devops?name_like=lo'
 [
-  {"name": "Barcelona"}
+  {"name": "lola"}
 ]
 ```
