@@ -140,5 +140,13 @@ COPY --from=build /tmp/_site /srv/http
 ```` 
 
 ```
-docker build -f BuildBase -t elhay/ceango . --build-arg proxy if needed 
+docker build -f BuildBase -t elhay/ceangoapp . --build-arg proxy if needed 
 ```
+
+now just let's run it :) 
+```
+docker run -it -p 8043:8043  elhay/ceangoapp bash
+```
+
+try to access 
+http://127.0.0.1:8043/ 
