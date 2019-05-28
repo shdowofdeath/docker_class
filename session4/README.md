@@ -64,4 +64,47 @@ docker volume inspect my-vol
 # craete docker volume with simple storage located in the local machine
 
 ```
+docker run -d -it --name storagedocker -v `pwd`/this_is_the_folder_that_we_mount:/mountindocker debian bash
+docker ps 
+CONTAINER ID        IMAGE                               COMMAND             CREATED             STATUS              PORTS                    NAMES
+0a3931e95f36        debian                              "bash"              3 seconds ago       Up 2 seconds                                 storagedocker
 
+docker exec -it storagedocker bash 
+
+root@0a3931e95f36:/# cat mountindocker/thisisonefile
+this is file #1
+```
+
+# so let's share it with diffrent docker 
+
+```
+docker run -it --name sharedcontinderdata  --volumes-from storagedocker debian bash 
+root@79c88e396d74:/# ls -la
+total 72
+drwxr-xr-x   1 root root 4096 May 28 05:06 .
+drwxr-xr-x   1 root root 4096 May 28 05:06 ..
+-rwxr-xr-x   1 root root    0 May 28 05:06 .dockerenv
+drwxr-xr-x   2 root root 4096 May  6 00:00 bin
+drwxr-xr-x   2 root root 4096 Mar 28 09:12 boot
+drwxr-xr-x   5 root root  360 May 28 05:06 dev
+drwxr-xr-x   1 root root 4096 May 28 05:06 etc
+drwxr-xr-x   2 root root 4096 Mar 28 09:12 home
+drwxr-xr-x   8 root root 4096 May  6 00:00 lib
+drwxr-xr-x   2 root root 4096 May  6 00:00 lib64
+drwxr-xr-x   2 root root 4096 May  6 00:00 media
+drwxr-xr-x   2 root root 4096 May  6 00:00 mnt
+drwxr-xr-x   4 root root  128 May 28 04:55 mountindocker
+drwxr-xr-x   2 root root 4096 May  6 00:00 opt
+dr-xr-xr-x 262 root root    0 May 28 05:06 proc
+drwx------   2 root root 4096 May  6 00:00 root
+drwxr-xr-x   3 root root 4096 May  6 00:00 run
+drwxr-xr-x   2 root root 4096 May  6 00:00 sbin
+drwxr-xr-x   2 root root 4096 May  6 00:00 srv
+dr-xr-xr-x  13 root root    0 May 28 04:59 sys
+drwxrwxrwt   2 root root 4096 May  6 00:00 tmp
+drwxr-xr-x  10 root root 4096 May  6 00:00 usr
+drwxr-xr-x  11 root root 4096 May  6 00:00 var
+root@79c88e396d74:/# cd mountindocker/
+root@79c88e396d74:/mountindocker# ls
+thisisonefile  thisisonefile2
+```
