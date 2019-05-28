@@ -103,7 +103,7 @@ docker run -it -p 5000:5000 elhay/myfirstimgaeimsocoool:test1
 now in docker mode 
 
 ```
-docker run -it -d -p --name test 5000:5000 elhay/myfirstimgaeimsocoool:test1 
+docker run -it -d --name test -p 7030:5000 elhay/myfirstimgaeimsocoool:test1 
 
 docker logs test 
 
